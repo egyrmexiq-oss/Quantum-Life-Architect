@@ -126,10 +126,10 @@ if prompt := st.chat_input("Describe un síntoma o un objetivo de vida..."):
     except Exception as e:
         st.error(f"Error de conexión: {e}")
 
-        if st.session_state.get('solicitar_plan'):
-    with st.chat_message("assistant", avatar="🏛️"):
-        with st.spinner("Diseñando tu Plan Maestro de Longevidad..."):
-            historial = str(st.session_state.messages)
+    if st.session_state.get('solicitar_plan'):
+        with st.chat_message("assistant", avatar="🏛️"):
+            with st.spinner("Diseñando tu Plan Maestro de Longevidad..."):
+                historial = str(st.session_state.messages)
             prompt_plan = f"""
             Basado en nuestra consultoría: {historial}.
             Genera un 'Plan Maestro de Longevidad Quantum' con:
