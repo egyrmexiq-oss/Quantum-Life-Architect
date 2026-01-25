@@ -111,10 +111,10 @@ if prompt := st.chat_input("Describe un síntoma o un objetivo de vida..."):
             3. Da pasos de acción y recomienda derivación a Quantum Mind o Supplements si aplica.
             """
             
-            try:
-                response = model.generate_content([contexto_filosofico, prompt])
-                res_text = response.text
-                st.markdown(res_text)
-                st.session_state.messages.append({"role": "assistant", "content": res_text})
-            except Exception as e:
-                st.error(f"Error de conexión: {e}")
+    try:
+        response = model.generate_content([contexto_filosofico, prompt])
+        res_text = response.text
+        st.markdown(res_text)
+        st.session_state.messages.append({"role": "assistant", "content": res_text})
+    except Exception as e:
+        st.error(f"Error de conexión: {e}")
