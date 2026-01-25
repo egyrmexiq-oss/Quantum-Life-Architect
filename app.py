@@ -125,3 +125,19 @@ if prompt := st.chat_input("Describe un síntoma o un objetivo de vida..."):
         st.session_state.messages.append({"role": "assistant", "content": res_text})
     except Exception as e:
         st.error(f"Error de conexión: {e}")
+
+        if st.session_state.get('solicitar_plan'):
+    with st.chat_message("assistant", avatar="🏛️"):
+        with st.spinner("Diseñando tu Plan Maestro de Longevidad..."):
+            historial = str(st.session_state.messages)
+            prompt_plan = f"""
+            Basado en nuestra consultoría: {historial}.
+            Genera un 'Plan Maestro de Longevidad Quantum' con:
+            1. Diagnóstico de Hábitos Actuales (Qué corregir).
+            2. Protocolo de Acción (Mañana, Tarde, Noche).
+            3. Sugerencia de Expertos (¿A quién ver?).
+            Usa un tono de Arquitecto Jefe: Directo y visionario.
+            """
+            res_plan = model.generate_content(prompt_plan)
+            st.markdown(res_plan.text)
+            st.session_state.solicitar_plan = False # Resetear
