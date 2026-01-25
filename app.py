@@ -43,7 +43,10 @@ with st.sidebar:
     # Datos que alimentan la inteligencia de la IA
     edad = st.slider("Edad Cronológica:", 18, 100, 45)
     st.markdown("---")
+    # Debajo de edad = st.slider(...)
+    genero = st.radio("Género Biológico:", ["Masculino", "Femenino"], horizontal=True)
     
+    st.markdown("---")
     st.subheader("📋 Estado de Vitalidad Actual")
     
     # Estos datos se enviarán a la IA automáticamente
