@@ -69,6 +69,13 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
     
+    st.markdown("---")
+    if st.button("📝 Generar Plan Maestro", use_container_width=True):
+        if st.session_state.messages:
+            st.session_state.solicitar_plan = True
+        else:
+            st.warning("Primero describe tu situación en el chat.")
+
     if st.button("🔒 Salir", type="primary", use_container_width=True):
         st.session_state.clear()
         st.rerun()
