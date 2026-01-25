@@ -42,6 +42,25 @@ with st.sidebar:
     
     # Datos que alimentan la inteligencia de la IA
     edad = st.slider("Edad Cronológica:", 18, 100, 45)
+    st.markdown("---")
+    
+    st.subheader("📋 Estado de Vitalidad Actual")
+    
+    # Estos datos se enviarán a la IA automáticamente
+    insomnio = st.checkbox("Dificultad para dormir")
+    energia = st.checkbox("Fatiga por la tarde")
+    articulaciones = st.checkbox("Molestias articulares")
+    estres = st.checkbox("Nivel de estrés alto")
+    
+    # Creamos un resumen para la IA
+    lista_sintomas = []
+    if insomnio: lista_sintomas.append("Insomnio")
+    if energia: lista_sintomas.append("Baja energía vespertina")
+    if articulaciones: lista_sintomas.append("Dolores articulares")
+    if estres: lista_sintomas.append("Estrés crónico")
+    
+    # Guardamos esto en el estado de la sesión para que la IA lo lea
+    st.session_state.sintomas_reportados = lista_sintomas
     foco = st.selectbox("Área a Optimizar:", 
                         ["Vitalidad Energética", "Claridad Mental", "Longevidad Celular", "Salud Metabólica"])
     
@@ -80,19 +99,16 @@ if prompt := st.chat_input("Describe un síntoma o un objetivo de vida..."):
         with st.spinner("Arquitectando respuesta..."):
             
             # El "System Prompt" que define la filosofía que me diste
-            contexto_filosofico = f"""
-            Eres el 'Quantum Life Architect', el coach de salud y vida definitivo.
-            FILOSOFÍA: La edad es un dato, no un destino. El enemigo es la ignorancia y el abandono.
-            PERFIL USUARIO: Edad {edad}, Objetivo principal: {foco}.
+           contexto_filosofico = f"""
+            Eres el 'Quantum Life Architect'.
+            PERFIL: {edad} años, enfocado en {foco}.
+            SÍNTOMAS REPORTADOS: {st.session_state.get('sintomas_reportados', 'Ninguno hoy')}.
             
-            DIRECTIVAS DE RESPUESTA:
-            1. EDUCAR: Explica la ciencia detrás de su duda (ej. por qué baja la energía).
-            2. DESMITIFICAR: Rompe el mito de 'es por la edad'.
-            3. ACCIÓN: Da 3 pasos concretos (Bio-hacks, nutrición o ejercicio).
-            4. ECOSISTEMA: Indica si necesita profundizar en:
-               - Quantum Mind (Psicología/Estrés)
-               - Quantum Supplements (Carencias nutricionales)
-               - Especialista Médico (Si detectas riesgo real).
+            FILOSOFÍA: La edad no es el gatillo, la ignorancia lo es. La mejora es posible siempre.
+            METODOLOGÍA: 
+            1. Analiza los síntomas reportados en relación a la edad.
+            2. Desmitifica que sea 'normal' sentirse mal.
+            3. Da pasos de acción y recomienda derivación a Quantum Mind o Supplements si aplica.
             """
             
             try:
